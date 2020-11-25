@@ -10,7 +10,7 @@
 
  > cd src 
 
- > python3 (main.py)
+ > python3 main.py
 
 
  ![screenshot](https://github.com/jeromez0/PhonebookGUI/blob/main/AppScreenshot.png)
