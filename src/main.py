@@ -5,6 +5,9 @@ class UserInterface:
 
 
     def __init__(self, main):
+
+        self.phonebook = []
+
         self.frame = Frame(main)
         self.frame.pack()
         #### Frame 1
@@ -21,19 +24,19 @@ class UserInterface:
         self.EntryL.grid(row = 1, column = 1, sticky = E, pady = 3, padx = 5)
         
         # phonebook
-        self.labelL = Label(self.frame, text = "Phone #")
-        self.labelL.grid(row = 2, column = 0, sticky = W)
-        self.EntryL = Entry(self.frame)
-        self.EntryL.grid(row = 2, column = 1, sticky = E, pady = 3, padx = 5)
+        self.labelP = Label(self.frame, text = "Phone #")
+        self.labelP.grid(row = 2, column = 0, sticky = W)
+        self.EntryP = Entry(self.frame)
+        self.EntryP.grid(row = 2, column = 1, sticky = E, pady = 3, padx = 5)
 
         #### Frame 2
         # buttons
         self.frame2 = Frame(main)
         self.frame2.pack()
-        self.b1 = Button(self.frame2, text = "  Add  ")
+        self.b1 = Button(self.frame2, text = "  Add  ", command = self.addEntry)
         self.b2 = Button(self.frame2, text = "Update")
         self.b3 = Button(self.frame2, text = "Delete")
-        self.b4 = Button(self.frame2, text = " Load ")
+        self.b4 = Button(self.frame2, text = " Clear", command = self.clearListBox)
 
         self.b1.grid(row = 0, column = 0, pady = 5)
         self.b2.grid(row = 0, column = 1, pady = 5)
@@ -66,6 +69,15 @@ class UserInterface:
         self.sb.configure(command = self.lb.yview)
         self.lb.configure(yscrollcommand = self.sb.set)
 
+    def addEntry(self):
+        self.phonebook.append( [self.EntryF.get(), self.EntryL.get(), self.EntryP.get()] )
+        print(self.phonebook)
+
+    def updateListBox(self, phoneList):
+        pass
+
+    def clearListBox(self):
+        pass
 
 if __name__ == "__main__":
     root = Tk()
