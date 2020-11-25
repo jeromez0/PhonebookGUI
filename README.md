@@ -13,4 +13,4 @@
  > python3 (main.py)
 
 
- [!screenshot](https://github.com/jeromez0/PhonebookGUI/blob/main/AppScreenshot.png)
+ ![screenshot](https://github.com/jeromez0/PhonebookGUI/blob/main/AppScreenshot.png)
