@@ -49,35 +49,32 @@ class UserInterface:
         self.frame3.pack()
         self.lb = Listbox(self.frame3, height = 10)
         self.lb.grid(row = 0, column = 0, pady = 10)
-        self.lb.insert(END, "entry1")
-        self.lb.insert(END, "entry2")
-        self.lb.insert(END, "entry3")
-        self.lb.insert(END, "entry4")
-        self.lb.insert(END, "entry5")
-        self.lb.insert(END, "entry6")
-        self.lb.insert(END, "entry7")
-        self.lb.insert(END, "entry8")
-        self.lb.insert(END, "entry9")
-        self.lb.insert(END, "entry10")
-        self.lb.insert(END, "entry11")
-
         #scrollbar widget
         self.sb = Scrollbar(self.frame3, orient = VERTICAL)
         self.sb.grid(row = 0, column = 1, sticky = N + S, pady = 10)
-
         #configuring listbox with scrollbar
         self.sb.configure(command = self.lb.yview)
         self.lb.configure(yscrollcommand = self.sb.set)
 
+        ## this code just fills out the listbox with pre-existing entries
+        self.updateListBox()
+
     def addEntry(self):
         self.phonebook.append( [self.EntryF.get(), self.EntryL.get(), self.EntryP.get()] )
-        print(self.phonebook)
+        self.updateListBox()
 
-    def updateListBox(self, phoneList):
-        pass
+    def updateListBox(self):
+        if len(self.phonebook) > 0:
+            for i in range(len(self.phonebook)):
+                self.lb.delete(0, END)
+            for i in range(len(self.phonebook)):
+                self.lb.insert(END, "{0}, {1}".format(self.phonebook[i][1], self.phonebook[i][0]))
 
     def clearListBox(self):
-        pass
+        if len(self.phonebook) > 0:
+            for i in range(len(self.phonebook)):
+                self.lb.delete(0, END)
+        self.phonebook = []
 
 if __name__ == "__main__":
     root = Tk()
