@@ -35,7 +35,7 @@ class UserInterface:
         self.frame2.pack()
         self.b1 = Button(self.frame2, text = "  Add  ", command = self.addEntry)
         self.b2 = Button(self.frame2, text = "Update")
-        self.b3 = Button(self.frame2, text = "Delete")
+        self.b3 = Button(self.frame2, text = "Delete", command = self.delete)
         self.b4 = Button(self.frame2, text = " Clear", command = self.clearListBox)
 
         self.b1.grid(row = 0, column = 0, pady = 5)
@@ -71,10 +71,21 @@ class UserInterface:
                 self.lb.insert(END, "{0}, {1}".format(self.phonebook[i][1], self.phonebook[i][0]))
 
     def clearListBox(self):
+        self.selection()
         if len(self.phonebook) > 0:
             for i in range(len(self.phonebook)):
                 self.lb.delete(0, END)
         self.phonebook = []
+        
+    def selection(self):
+        print("At {0}".format(self.lb.curselection()))
+        return int(self.lb.curselection()[0])
+
+    def delete(self):
+        print(self.phonebook)
+        y = self.selection()
+        self.phonebook.remove(y)
+        self.updateListBox()
 
 if __name__ == "__main__":
     root = Tk()
