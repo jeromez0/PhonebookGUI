@@ -1,8 +1,6 @@
 from tkinter import *
 
-
 class UserInterface:
-
 
     def __init__(self, main):
 
@@ -57,14 +55,14 @@ class UserInterface:
         self.lb.configure(yscrollcommand = self.sb.set)
 
         ## this code just fills out the listbox with pre-existing entries
-        self.updateListBox()
+        self.__updateListBox()
 
     def addEntry(self):
         self.phonebook.append( [self.EntryF.get(), self.EntryL.get(), self.EntryP.get()] )
         length = len(self.phonebook) - 1
         self.lb.insert(END, "{0}, {1}".format(self.phonebook[length][1], self.phonebook[length][0]))
 
-    def updateListBox(self):
+    def __updateListBox(self):
         if len(self.phonebook) > 0:
             for i in range(len(self.phonebook)):
                 self.lb.delete(0, END)
@@ -81,9 +79,10 @@ class UserInterface:
         return int(self.lb.curselection()[0])
 
     def delete(self):
-        try:
+        if len(self.phonebook) > 1:
             y = self.selection()
             del self.phonebook[y]
-            self.updateListBox()
-        except IndexError:
-            pass
+            self.__updateListBox()
+        elif len(self.phonebook) == 1:
+            self.clearListBox()
+    
