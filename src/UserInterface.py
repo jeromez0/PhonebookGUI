@@ -45,8 +45,8 @@ class UserInterface:
         # listbox widget
         self.frame3 = Frame(main)
         self.frame3.pack()
-        self.lb = Listbox(self.frame3, height = 10)
-        self.lb.grid(row = 0, column = 0, pady = 10)
+        self.lb = Listbox(self.frame3, height = 20, width = 40)
+        self.lb.grid(row = 0, column = 0, pady = 10, padx = 20)
         #scrollbar widget
         self.sb = Scrollbar(self.frame3, orient = VERTICAL)
         self.sb.grid(row = 0, column = 1, sticky = N + S, pady = 10)
@@ -57,7 +57,7 @@ class UserInterface:
     def addEntry(self):
         self.phonebook.append( [self.EntryF.get(), self.EntryL.get(), self.EntryP.get()] )
         length = len(self.phonebook) - 1
-        self.lb.insert(END, "{0}, {1}".format(self.phonebook[length][1], self.phonebook[length][0]))
+        self.lb.insert(END, "{0}, {1} ----- {2}".format(self.phonebook[length][1], self.phonebook[length][0], self.phonebook[length][2]))
 
     def updateEntry(self):
         pass
@@ -75,10 +75,6 @@ class UserInterface:
         self.lb.delete(POINTER, POINTER)
     
     def _selection(self):
-        num = int(self.lb.curselection()[0])
-        PhoneNum = StringVar()
-        self.EntryP.delete(0, END)
-        self.EntryP.insert(0,PhoneNum)
         return int(self.lb.curselection()[0])
 
     def clearListBox(self):
