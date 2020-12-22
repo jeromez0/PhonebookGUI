@@ -33,7 +33,7 @@ class UserInterface:
         self.frame2.pack()
         self.b1 = Button(self.frame2, text = "  Add  ", command = self.addEntry)
         self.b2 = Button(self.frame2, text = "Update")
-        self.b3 = Button(self.frame2, text = "Delete", command = self.delete)
+        self.b3 = Button(self.frame2, text = "Delete", command = self.deleteEntry)
         self.b4 = Button(self.frame2, text = " Clear", command = self.clearListBox)
 
         self.b1.grid(row = 0, column = 0, pady = 5)
@@ -54,35 +54,34 @@ class UserInterface:
         self.sb.configure(command = self.lb.yview)
         self.lb.configure(yscrollcommand = self.sb.set)
 
-        ## this code just fills out the listbox with pre-existing entries
-        self.__updateListBox()
-
     def addEntry(self):
         self.phonebook.append( [self.EntryF.get(), self.EntryL.get(), self.EntryP.get()] )
         length = len(self.phonebook) - 1
         self.lb.insert(END, "{0}, {1}".format(self.phonebook[length][1], self.phonebook[length][0]))
 
-    def __updateListBox(self):
-        if len(self.phonebook) > 0:
-            for i in range(len(self.phonebook)):
-                self.lb.delete(0, END)
-            for i in range(len(self.phonebook)):
-                self.lb.insert(END, "{0}, {1}".format(self.phonebook[i][1], self.phonebook[i][0]))
+    def updateEntry(self):
+        pass
 
-    def clearListBox(self):
-        if len(self.phonebook) > 0:
-            for i in range(len(self.phonebook)):
-                self.lb.delete(0, END)
-        self.phonebook = []
-        
-    def selection(self):
+    def deleteEntry(self):
+        # step 1 is to bind the function to the button
+        # step 2 we need a method to figure out which element was selected based on index
+        try: 
+            POINTER = self._selection()
+        except:
+            return
+        # step 3 we need to delete from memory (the list) at the index using list method 'del'            
+        del self.phonebook[POINTER]
+        # step 4 delete elements from the tkinter display
+        self.lb.delete(POINTER, POINTER)
+    
+    def _selection(self):
+        num = int(self.lb.curselection()[0])
+        PhoneNum = StringVar()
+        self.EntryP.delete(0, END)
+        self.EntryP.insert(0,PhoneNum)
         return int(self.lb.curselection()[0])
 
-    def delete(self):
-        if len(self.phonebook) > 1:
-            y = self.selection()
-            del self.phonebook[y]
-            self.__updateListBox()
-        elif len(self.phonebook) == 1:
-            self.clearListBox()
+    def clearListBox(self):
+        for x in range(len(self.phonebook)):
+            self.lb.delete(0, END)
     

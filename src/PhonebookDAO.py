@@ -9,5 +9,11 @@ class PhonebookDAO:
         with open('data.csv', newline = '') as csvfile:
             Data = csv.reader(csvfile, delimiter = ' ', quotechar = '|')
             for row in Data:
-                print(' '.join(row))
+                self.phonebookData.append(' '.join(row))
+            
+        print(self.phonebookData)
 
+
+newPhonebook = PhonebookDAO()
+
+newPhonebook.gatherData()
