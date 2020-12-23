@@ -1,11 +1,13 @@
 from tkinter import *
+import PhonebookDAO
 
 class UserInterface:
 
     def __init__(self, main):
 
-        self.phonebook = []
-
+        self.phonebookDAO = PhonebookDAO.PhonebookDAO()
+        self.phonebook = self.phonebookDAO.gatherData()
+        
         self.frame = Frame(main)
         self.frame.pack()
         #### Frame 1
@@ -54,13 +56,23 @@ class UserInterface:
         self.sb.configure(command = self.lb.yview)
         self.lb.configure(yscrollcommand = self.sb.set)
 
+        # Update entries
+        self.updateEntry()
+
     def addEntry(self):
         self.phonebook.append( [self.EntryF.get(), self.EntryL.get(), self.EntryP.get()] )
         length = len(self.phonebook) - 1
-        self.lb.insert(END, "{0}, {1} ----- {2}".format(self.phonebook[length][1], self.phonebook[length][0], self.phonebook[length][2]))
+        leng = len(f"{self.phonebook[i][1]}, {self.phonebook[i][0]}")
+        newL = 30 -leng
+        string = "-"*newL
+        self.lb.insert(END, f"{self.phonebook[length][1]}, {self.phonebook[length][0]} {string} {self.phonebook[length][2]}")
 
     def updateEntry(self):
-        pass
+        for i in range(len(self.phonebook)):
+            length = len(f"{self.phonebook[i][1]}, {self.phonebook[i][0]}")
+            newL = 30 -length
+            string = "-"*newL
+            self.lb.insert(END, f"{self.phonebook[i][1]}, {self.phonebook[i][0]} {string} {self.phonebook[i][2]}")
 
     def deleteEntry(self):
         # step 1 is to bind the function to the button
